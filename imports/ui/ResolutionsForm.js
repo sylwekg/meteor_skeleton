@@ -4,8 +4,10 @@ export default class ResolutionsForm extends Component {
     addResolution(event) {
         event.preventDefault();
         let text=this.refs.resolution.value.trim();
-        Meteor.call('resolutions.insert', text);
-        this.refs.resolution.value=""
+        Meteor.call('resolutions.insert', text, ()=> {
+            this.refs.resolution.value=""
+        });
+        
     }
   
     render() {

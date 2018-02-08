@@ -13,12 +13,22 @@ if (Meteor.isServer) {
 Meteor.methods({
     'resolutions.insert'(text) {
         check(text, String);
-     
         Resolutions.insert({
           text,
           complete: false,
           createdAt: new Date(),
           });
+    },
+    'toggleResolution'(id, status) {
+        check(status, Boolean);
+        check(id, String);
+        Resolutions.update(id, {
+            $set: {complete: !status}
+        })
+    },
+    'deleteResolution'(id) {
+        check(id, String);
+        Resolutions.remove(id)
     }
 })
 
