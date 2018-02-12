@@ -10,6 +10,10 @@ import IconButton from 'material-ui/IconButton';
 import Hidden from 'material-ui/Hidden';
 import Divider from 'material-ui/Divider';
 import MenuIcon from 'material-ui-icons/Menu';
+import AccountCircle from 'material-ui-icons/AccountCircle';
+import Menu, { MenuItem } from 'material-ui/Menu';
+import Button from 'material-ui/Button';
+import AccountsUI from './AccountsUI'
 import { mailFolderListItems, otherMailFolderListItems } from './tileData';
 
 const drawerWidth = 240;
@@ -21,6 +25,13 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
     zIndex: 1,
     overflow: 'hidden',
+  },
+  flex: {
+    flex: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
   },
   appFrame: {
     position: 'relative',
@@ -69,6 +80,7 @@ const styles = theme => ({
 class ResponsiveDrawer extends React.Component {
   state = {
     mobileOpen: false,
+    anchorEl: null,
   };
 
   handleDrawerToggle = () => {
@@ -76,8 +88,18 @@ class ResponsiveDrawer extends React.Component {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
 
+  handleMenu = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
   render() {
     const { classes, theme } = this.props;
+    const { anchorEl } = this.state;
+    const open = Boolean(anchorEl);
 
     const drawer = (
       <div>
@@ -99,6 +121,7 @@ class ResponsiveDrawer extends React.Component {
     return (
       <div className={classes.root}>
         <div className={classes.appFrame}>
+
           <AppBar className={classes.appBar}>
             <Toolbar>
               <IconButton
@@ -109,11 +132,48 @@ class ResponsiveDrawer extends React.Component {
               >
                 <MenuIcon />
               </IconButton>
-              <Typography variant="title" color="inherit" noWrap>
+              <Typography variant="title" color="inherit" className={classes.flex} noWrap>
                 Responsive drawer
               </Typography>
+              <AccountsUI style={{positionLeft: "-200px"}} />
+
+              {/* {Meteor.userId() && (
+                <div>
+                  <IconButton
+                    aria-owns={open ? 'menu-appbar' : null}
+                    aria-haspopup="true"
+                    onClick={this.handleMenu}
+                    color="inherit"
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={open}
+                    onClose={this.handleClose}
+                  >
+                    <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                    <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                  </Menu>
+                </div>
+              )}
+              {!Meteor.userId() && (
+              
+              <Button color="inherit">Login</Button> 
+              )} */}
+
             </Toolbar>
           </AppBar>
+
           <Hidden mdUp>
             <Drawer
               variant="temporary"

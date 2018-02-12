@@ -36,7 +36,7 @@ class App extends Component {
 }
 
 export default withTracker(() => {
-    Meteor.subscribe('resolutions');
+    Meteor.subscribe('userResolutions');
   
     return {
         resolutions: Resolutions.find({} ).fetch(),
