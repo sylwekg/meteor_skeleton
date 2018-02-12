@@ -5,7 +5,7 @@ import { Resolutions } from '../api/resolutions';
 import { withTracker } from 'meteor/react-meteor-data';
 import ResolutionsForm from './ResolutionsForm';
 import ResolutionSingle from './ResolutionSingle';
-// App component - represents the whole app
+
 class App extends Component {
     constructor(props) {
         super(props);
