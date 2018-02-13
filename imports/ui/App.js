@@ -29,6 +29,8 @@ class App extends Component {
             { list.length > 0 && 
             <ul> {list} </ul> 
             }
+            <br />
+            <h1> {Session.get('test')} </h1>
         </div>
       </div>
       );
