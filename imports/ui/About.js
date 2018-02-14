@@ -8,9 +8,10 @@ export default class About extends Component {
     }
 
     render() {
+        
         return (
             <div>
-                <span> About placeholder </span>
+                <span> About placeholder => {Meteor.settings.public.test} </span>
                 <button onClick={this.setVar} > Sign up </button>
             </div>
         );
