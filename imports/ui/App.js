@@ -5,6 +5,9 @@ import { Resolutions } from '../api/resolutions';
 import { withTracker } from 'meteor/react-meteor-data';
 import ResolutionsForm from './ResolutionsForm';
 import ResolutionSingle from './ResolutionSingle';
+
+import { CSSTransitionGroup } from 'react-transition-group'
+
 // App component - represents the whole app
 class App extends Component {
     constructor(props) {
@@ -26,9 +29,15 @@ class App extends Component {
         <h1> My Resolutions </h1>
         <div>
             <ResolutionsForm /> 
+            <CSSTransitionGroup
+                transitionName="example"
+                transitionEnterTimeout={500}
+                transitionLeaveTimeout={300}
+            >
             { list.length > 0 && 
             <ul> {list} </ul> 
             }
+            </CSSTransitionGroup>
             <br />
             <h1> {Session.get('test')} </h1>
         </div>
