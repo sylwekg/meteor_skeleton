@@ -20,7 +20,7 @@ export default class ResolutionSingle extends Component {
                     checked={this.props.resolution.complete} 
                     onClick = {this.toggleChecked} 
                 />
-                {this.props.resolution.text}
+                <a href={`/resolutions/${this.props.resolution._id}`}>  {this.props.resolution.text} </a>
                 <button onClick={this.deleteResolution} > &times; </button>
 
             </li>
