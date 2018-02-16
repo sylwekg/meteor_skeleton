@@ -14,7 +14,7 @@ import AccountCircle from 'material-ui-icons/AccountCircle';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Button from 'material-ui/Button';
 import AccountsUI from './AccountsUI'
-import { mailFolderListItems, otherMailFolderListItems } from './tileData';
+import MailFolderListItems, {otherMailFolderListItems } from './MailFolderListItems';
 
 const drawerWidth = 240;
 
@@ -84,7 +84,6 @@ class ResponsiveDrawer extends React.Component {
   };
 
   handleDrawerToggle = () => {
-    console.log(this.props.theme.palette)
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
 
@@ -100,19 +99,23 @@ class ResponsiveDrawer extends React.Component {
     const { classes, theme } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-
+    
     const drawer = (
       <div>
-        <div className={ classes.drawerHeader } style = {{ backgroundColor: theme.palette.primary.main }}>
-            <List>
-            <Typography className={ classes.drawerText }  variant="title"  noWrap>
-            My Resolutions <br/> version 0.1 
-            </Typography>
-            </List>
-        </div>
+        <a href="/">
+          <div className={ classes.drawerHeader } 
+            style = {{ backgroundColor: theme.palette.primary.main }}
+            >
+              <List>
+              <Typography className={ classes.drawerText }  variant="title"  noWrap>
+              My Resolutions <br/> version 0.1 
+              </Typography>
+              </List>
+          </div>
+        </a>
 
         <Divider />
-        <List>{mailFolderListItems}</List>
+        <MailFolderListItems togleDrawer={this.handleDrawerToggle} /> 
         <Divider />
         <List>{otherMailFolderListItems}</List>
       </div>
@@ -133,7 +136,7 @@ class ResponsiveDrawer extends React.Component {
                 <MenuIcon />
               </IconButton>
               <Typography variant="title" color="inherit" className={classes.flex} noWrap>
-                Responsive drawer
+                {this.props.header}
               </Typography>
               <AccountsUI style={{positionLeft: "-200px"}} />
 
@@ -188,6 +191,7 @@ class ResponsiveDrawer extends React.Component {
               }}
             >
               {drawer}
+
             </Drawer>
           </Hidden>
           <Hidden smDown implementation="css">
@@ -217,4 +221,4 @@ ResponsiveDrawer.propTypes = {
   content: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(ResponsiveDrawer);
+export default withStyles(styles, { withTheme: true }) (ResponsiveDrawer);

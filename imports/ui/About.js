@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 
 export default class About extends Component {
+    componentWillMount() {
+        Session.set('headerTitle','About');
+    }
 
     setVar() {
         // Session.set('test','Hello');

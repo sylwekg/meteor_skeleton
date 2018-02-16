@@ -18,6 +18,11 @@ class App extends Component {
         };
   }
 
+  componentWillMount() {
+    Session.set('headerTitle','Main Page');
+  }
+
+
   render() {
       console.log(this.props.resolutions)
       let list = this.props.resolutions.map( (item, index) => {

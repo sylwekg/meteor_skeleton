@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import { blueGrey, red } from 'material-ui/colors';
 import MainAppBar from './MainAppBar';
-import ResponsiveDrawer from './ResponsiveDrawer';
+import ResponsiveDrawerContainer from './ResponsiveDrawerContainer';
 
 // Create a theme instance.
 const theme = createMuiTheme({
@@ -18,13 +18,7 @@ export const MainLayout = ({content}) => (
     <MuiThemeProvider theme={theme}>
         <div>
             <header>
-                {/* <MainAppBar /> */}
-                {/* <nav>
-                    <a href="/"> Resolutions </a>
-                    <a href="/about"> About </a>
-
-                </nav> */}
-                <ResponsiveDrawer content = {content} />
+                <ResponsiveDrawerContainer content = {content} />
             </header>
             <main>
                 
