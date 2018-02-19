@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 
-export default class About extends Component {
+export default class Private extends Component {
     componentWillMount() {
-        Session.set('headerTitle','About');
+        Session.set('headerTitle','Private');
     }
 
     setVar() {
@@ -13,7 +13,7 @@ export default class About extends Component {
         
         return (
             <div>
-                <span> About placeholder => {Meteor.settings.public.test} </span>
+                <span> Private placeholder => {Meteor.settings.public.test} </span>
                 <button onClick={this.setVar} > Sign up </button>
             </div>
         );

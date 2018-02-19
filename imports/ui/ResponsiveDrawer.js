@@ -95,6 +95,15 @@ class ResponsiveDrawer extends React.Component {
     this.setState({ anchorEl: null });
   };
 
+  openLoginWindow = ()=> {
+    Session.set('Meteor.loginButtons.dropdownVisible', true)
+  }
+
+  handleLogout = () => {
+    Meteor.logout();
+    this.setState({ anchorEl: null });
+  }
+
   render() {
     const { classes, theme } = this.props;
     const { anchorEl } = this.state;
@@ -140,7 +149,7 @@ class ResponsiveDrawer extends React.Component {
               </Typography>
               <AccountsUI style={{positionLeft: "-200px"}} />
 
-              {/* {Meteor.userId() && (
+              {Meteor.userId() && (
                 <div>
                   <IconButton
                     aria-owns={open ? 'menu-appbar' : null}
@@ -166,13 +175,16 @@ class ResponsiveDrawer extends React.Component {
                   >
                     <MenuItem onClick={this.handleClose}>Profile</MenuItem>
                     <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                    <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
                   </Menu>
                 </div>
               )}
               {!Meteor.userId() && (
-              
-              <Button color="inherit">Login</Button> 
-              )} */}
+              <Button 
+                onClick={this.openLoginWindow} 
+                color="inherit"
+                >Login</Button> 
+              )}
 
             </Toolbar>
           </AppBar>
