@@ -29,15 +29,15 @@ class App extends Component {
         <h1> My Resolutions </h1>
         <div>
             <ResolutionsForm /> 
-            <CSSTransitionGroup
+            {/* <CSSTransitionGroup
                 transitionName="example"
                 transitionEnterTimeout={500}
                 transitionLeaveTimeout={300}
-            >
+            > */}
             { list.length > 0 && 
             <ul> {list} </ul> 
             }
-            </CSSTransitionGroup>
+            {/* </CSSTransitionGroup> */}
             <br />
             <h1> {Session.get('test')} </h1>
         </div>
