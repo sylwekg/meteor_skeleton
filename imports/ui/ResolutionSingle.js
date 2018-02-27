@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Button, List, Checkbox } from 'semantic-ui-react'
 
 export default class ResolutionSingle extends Component {
 
@@ -8,22 +9,25 @@ export default class ResolutionSingle extends Component {
     }
 
     deleteResolution = () => {
-        Meteor.call('deleteResolution', this.props.resolution)
+        Meteor.call('deleteResolution', this.props.resolution, (error, data)=> {
+            if(error) {
+                Bert.alert('Please login to delete','danger', 'fixed-top', 'fa-frown-o');
+            } 
+        });
     }
   
     render() {
         return (
-            <li>
-                <input 
-                    type = "checkbox" 
-                    readOnly = {true} 
-                    checked={this.props.resolution.complete} 
-                    onClick = {this.toggleChecked} 
-                />
+            <List.Item >
+                <List.Content floated='right'>
+                    <Button onClick={this.deleteResolution} >Remove</Button>
+                </List.Content>
+                <Checkbox 
+                    checked = {this.props.resolution.complete} 
+                    onClick = {this.toggleChecked}  
+                    />
                 <a href={`/resolutions/${this.props.resolution._id}`}>  {this.props.resolution.text} </a>
-                <button onClick={this.deleteResolution} > &times; </button>
-
-            </li>
+            </List.Item>
         );
     }
 }

@@ -18,7 +18,6 @@ class DesktopContainer extends Component {
   render() {
     const { children } = this.props
     const { fixed, activeItem } = this.state
-    console.log(">>>>",window.location.pathname)
     return (
       <Responsive minWidth = {767} >
         <Visibility once={false} onBottomPassed={this.showFixedMenu} onBottomPassedReverse={this.hideFixedMenu}>
@@ -35,7 +34,7 @@ class DesktopContainer extends Component {
                 <Menu.Item href="/" as='a'style ={{left: '-30px'}} >Logo.pl</Menu.Item>
                 <Menu.Item href="/" as='a' name='/' active={activeItem === '/'} onClick={this.handleItemClick}>Home</Menu.Item>
                 <Menu.Item href="#" as='a' name='work' active={activeItem === 'work'} onClick={this.handleItemClick}>Work</Menu.Item>
-                <Menu.Item href="#" as='a' name='company' active={activeItem === 'company'} onClick={this.handleItemClick}>Company</Menu.Item>
+                <Menu.Item href="/resolutions" as='a' name='resolutions' active={activeItem === 'resolutions'} onClick={this.handleItemClick}>Resolutions</Menu.Item>
                 <Menu.Item href='/about' name='/about' as='a' active={activeItem === '/about'} onClick={this.handleItemClick}>About</Menu.Item>
                 <Menu.Item position='right'>
                   <AccountsUI />
@@ -78,7 +77,7 @@ class MobileContainer extends Component {
           <Sidebar as={Menu} animation='uncover' inverted vertical visible={sidebarOpened}  onClick={this.handleToggle}>
             <Menu.Item href="/" as='a' name='/' active={activeItem === '/'} onClick={this.handleItemClick} >Home</Menu.Item>
             <Menu.Item href="#" as='a' name='/work' active={activeItem === '/work'} onClick={this.handleItemClick} >Work</Menu.Item>
-            <Menu.Item href="#" as='a' name='/company' active={activeItem === '/company'} onClick={this.handleItemClick} >Company</Menu.Item>
+            <Menu.Item href="/resolutions" as='a' name='/resolutions' active={activeItem === '/resolutions'} onClick={this.handleItemClick} >Resolutions</Menu.Item>
             <Menu.Item href="#" as='a' name='/careers' active={activeItem === '/careers'} onClick={this.handleItemClick}>Careers</Menu.Item>
             <Menu.Item href="/about" as='a' name='/about' active={activeItem === '/about'} onClick={this.handleItemClick} >About</Menu.Item>
             <Menu.Item as='a'>Log in</Menu.Item>
@@ -98,7 +97,6 @@ class MobileContainer extends Component {
                   </Menu.Item>
                 </Menu>
               </Container>
-              {/* <HomepageHeading  /> */}
             {this.props.heading}
             </Segment>      
           {this.props.content}

@@ -27,6 +27,16 @@ FlowRouter.route('/about', {
     }
 });
 
+FlowRouter.route('/resolutions', {
+    name: 'resolutions',
+    action(params) {
+        mount(MainLayout, {
+            // heading: (<HomepageHeading />),
+            content: (<App />)
+        })
+    }
+});
+
 FlowRouter.route('/resolutions/:id', {
     name: 'resolutions',
     action(params) {

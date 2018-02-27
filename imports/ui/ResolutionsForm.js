@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
+import { Input } from 'semantic-ui-react'
 
 export default class ResolutionsForm extends Component {
     addResolution(event) {
         event.preventDefault();
-        let text=this.refs.resolution.value.trim();
+        let text=this.refs.resolution.inputRef.value
         if(text) {
             Meteor.call('resolutions.insert', text, (error, data)=> {
                 if(error) {
                     Bert.alert('Please login before submitting','danger', 'fixed-top', 'fa-frown-o');
                 } else {
-                    this.refs.resolution.value=""
+                    this.refs.resolution.inputRef.value=""
                 }
             });            
         }
@@ -20,7 +21,14 @@ export default class ResolutionsForm extends Component {
     render() {
         return (
             <form className="new-resolutions" onSubmit={this.addResolution.bind(this)} >
-                <input type="text" ref="resolution" placeholder="example: Finish React Meteor Series" />
+                <Input
+                    ref="resolution" 
+                    icon='tags'
+                    iconPosition='left'
+                    label={{ tag: true, content: 'Add Resolution' }}
+                    labelPosition='right'
+                    placeholder='example: less shopping'
+                />
             </form>
         );
     }
