@@ -21,7 +21,7 @@ FlowRouter.route('/about', {
     name: 'about',
     action() {
         mount(MainLayout, {
-            heading: (<HomepageHeading />),
+            // heading: (<HomepageHeading />),
             content: (<About />)
         })
     }
@@ -31,7 +31,7 @@ FlowRouter.route('/resolutions/:id', {
     name: 'resolutions',
     action(params) {
         mount(MainLayout, {
-            heading: (<HomepageHeading />),
+            // heading: (<HomepageHeading />),
             content: (<ResolutionDetailContainer id={params.id} />)
         })
     }

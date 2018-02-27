@@ -4,6 +4,10 @@ body, html {
   height: 100%;
 }
 
+.accounts-dialog {
+  left: -200px !important
+}
+
 /* The hero image */
 .hero-image {
 
