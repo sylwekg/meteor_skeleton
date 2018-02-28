@@ -23,7 +23,7 @@ meteortoys:allthings
 react-meteor-data
 accounts-ui
 accounts-password
-useraccounts:semantic-ui
+# useraccounts:semantic-ui
 
 themeteorchef:bert
 semantic:ui
