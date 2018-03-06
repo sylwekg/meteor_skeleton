@@ -1,10 +1,10 @@
-import { ReactMeteorData } from 'meteor/react-meteor-data';
-import { withTracker } from 'meteor/react-meteor-data';
-
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
-import IndividualFile from './FileIndividualFile';
+import { ReactMeteorData } from 'meteor/react-meteor-data';
+import { withTracker } from 'meteor/react-meteor-data';
+import { Item, Progress, Grid, Segment } from 'semantic-ui-react'
 import { _ } from 'meteor/underscore';
+import IndividualFile from './FileIndividualFile';
 import Images from '../api/images';
 
 class FileApp extends Component {
@@ -93,16 +93,6 @@ class FileApp extends Component {
     if (!_.isEmpty(this.state.uploading)) {
       return <div>
         {this.state.uploading.file.name}
-
-        <div className="progress progress-bar-default">
-          <div style={{width: this.state.progress + '%'}} aria-valuemax="100"
-             aria-valuemin="0"
-             aria-valuenow={this.state.progress || 0} role="progressbar"
-             className="progress-bar">
-            <span className="sr-only">{this.state.progress}% Complete (success)</span>
-            <span>{this.state.progress}%</span>
-          </div>
-        </div>
       </div>
     }
   }
@@ -112,7 +102,6 @@ class FileApp extends Component {
       'use strict';
 
       let fileCursors = this.props.docs;
-
       // Run through each file that the user has stored
       // (make sure the subscription only sends files owned by this user)
       let display = fileCursors.map((aFile, key) => {
@@ -120,37 +109,32 @@ class FileApp extends Component {
         let link = Images.findOne({_id: aFile._id}).link();  //The "view/download" link
         // console.log('LINK:',link)
         // Send out components that show details of each file
-        return <div key={'file' + key}>
-        <IndividualFile
-            fileName={aFile.name}
-            fileUrl={link}
-            fileId={aFile._id}
-            fileSize={aFile.size}
-          />  
-        </div>
+        return <IndividualFile 
+          key={'file' + key} 
+          fileName={aFile.name} 
+          fileUrl={link} 
+          fileId={aFile._id} 
+          fileSize={aFile.size} /> 
       });
 
       return <div>
-        <div className="row">
-          <div className="col-md-12">
-            <p>Upload New File:</p>
+        <Grid container columns={2} stackable stretched>
+          <Grid.Column floated='left'>
+            <label htmlFor="fileinput" className="custom-file-upload">
+                Upload new file
+            </label>
             <input type="file" id="fileinput" disabled={this.state.inProgress} ref="fileinput"
-                 onChange={this.uploadIt}/>
-          </div>
-        </div>
-
-        <div className="row m-t-sm m-b-sm">
-          <div className="col-md-6">
-
-            {this.showUploads()}
-
-          </div>
-          <div className="col-md-6">
-          </div>
-        </div>
-
-        {display}
-
+                  onChange={this.uploadIt}/>
+          </Grid.Column>
+          <Grid.Column floated='left'>
+            <Progress percent={this.state.progress}  progress="percent" autoSuccess />
+          </Grid.Column>
+        </Grid>
+          {/* {this.showUploads()} */}
+        
+        <Item.Group divided>
+          {display}
+        </Item.Group>
       </div>
     }
     else return <div> loading ...</div>
@@ -161,6 +145,6 @@ export default withTracker(() => {
   const handle = Meteor.subscribe('files.images.all');
   return {
     docsReadyYet: handle.ready(),
-    docs: Images.find() // Collection is Images
+    docs: Images.find().fetch() // Collection is Images
   };
 })(FileApp);

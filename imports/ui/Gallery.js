@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
 import FileApp from './FileApp';
+import { Segment, Grid, List } from 'semantic-ui-react';
 
 export default class Gallery extends Component {
   render() {
     return (
-      <div>
-        <br />
-        <br />
-        <FileApp />        
-      </div>
+        <Segment style={{ padding: '2em 2em' }} vertical>
+          <FileApp /> 
+        </Segment >
     );
   }
 }

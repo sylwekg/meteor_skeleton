@@ -18,7 +18,7 @@ const Images = new FilesCollection({
     var records = cursor.fetch();
     var user = Meteor.userId();
 
-    console.log(">>>>>> records >>>>>", records);
+    // console.log(">>>>>> records >>>>>", records);
     if(!user) {
       throw new Meteor.Error("Please login to remove file!");
       return false;
