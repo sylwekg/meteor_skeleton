@@ -33,7 +33,7 @@ class DesktopContainer extends Component {
               <Container>
                 <Menu.Item href="/" as='a'style ={{left: '-30px'}} >Logo.pl</Menu.Item>
                 <Menu.Item href="/" as='a' name='/' active={activeItem === '/'} onClick={this.handleItemClick}>Home</Menu.Item>
-                <Menu.Item href="#" as='a' name='work' active={activeItem === 'work'} onClick={this.handleItemClick}>Work</Menu.Item>
+                <Menu.Item href="#" as='a' name='gallery' active={activeItem === 'gallery'} onClick={this.handleItemClick}>Gallery</Menu.Item>
                 <Menu.Item href="/resolutions" as='a' name='resolutions' active={activeItem === 'resolutions'} onClick={this.handleItemClick}>Resolutions</Menu.Item>
                 <Menu.Item href='/about' name='/about' as='a' active={activeItem === '/about'} onClick={this.handleItemClick}>About</Menu.Item>
                 <Menu.Item position='right'>
@@ -76,7 +76,7 @@ class MobileContainer extends Component {
         <Sidebar.Pushable>
           <Sidebar as={Menu} animation='uncover' inverted vertical visible={sidebarOpened}  onClick={this.handleToggle}>
             <Menu.Item href="/" as='a' name='/' active={activeItem === '/'} onClick={this.handleItemClick} >Home</Menu.Item>
-            <Menu.Item href="#" as='a' name='/work' active={activeItem === '/work'} onClick={this.handleItemClick} >Work</Menu.Item>
+            <Menu.Item href="#" as='a' name='/gallery' active={activeItem === '/gallery'} onClick={this.handleItemClick} >Gallery</Menu.Item>
             <Menu.Item href="/resolutions" as='a' name='/resolutions' active={activeItem === '/resolutions'} onClick={this.handleItemClick} >Resolutions</Menu.Item>
             <Menu.Item href="#" as='a' name='/careers' active={activeItem === '/careers'} onClick={this.handleItemClick}>Careers</Menu.Item>
             <Menu.Item href="/about" as='a' name='/about' active={activeItem === '/about'} onClick={this.handleItemClick} >About</Menu.Item>

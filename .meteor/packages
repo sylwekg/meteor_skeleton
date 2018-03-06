@@ -32,3 +32,5 @@ less
 jquery
 practicalmeteor:mocha
 session
+
+ostrio:files

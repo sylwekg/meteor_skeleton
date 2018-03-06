@@ -5,6 +5,7 @@ import App from '../imports/ui/App.js';
 import About from '../imports/ui/About.js';
 import MainContent from '../imports/ui/MainContent';
 import HomepageHeading from '../imports/ui/HomepageHeading';
+import Gallery from '../imports/ui/Gallery.js';
 import ResolutionDetailContainer from '../imports/ui/ResolutionDetailContainer.js';
 
 FlowRouter.route('/', {
@@ -33,6 +34,16 @@ FlowRouter.route('/resolutions', {
         mount(MainLayout, {
             // heading: (<HomepageHeading />),
             content: (<App />)
+        })
+    }
+});
+
+
+FlowRouter.route('/gallery', {
+    name: 'gallery',
+    action() {
+        mount(MainLayout, {
+            content: (<Gallery />)
         })
     }
 });

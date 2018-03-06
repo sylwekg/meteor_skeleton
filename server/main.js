@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import '../imports/api/resolutions.js';
-
+import '../imports/api/images.js';
 
 
 Meteor.startup(() => {
