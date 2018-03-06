@@ -11,7 +11,7 @@ export default class About extends Component {
         
         return (
             <div>
-                <span> About placeholder => {Meteor.settings.public.test} </span>
+                {/* <span> About placeholder => {Meteor.settings.public.test} </span> */}
                 <button onClick={this.setVar} > Sign up </button>
             </div>
         );

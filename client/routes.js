@@ -3,6 +3,7 @@ import { mount } from 'react-mounter';
 import {MainLayout} from '../imports/ui/MainLayout';
 import App from '../imports/ui/App.js';
 import About from '../imports/ui/About.js';
+import Gallery from '../imports/ui/Gallery.js';
 import ResolutionDetailContainer from '../imports/ui/ResolutionDetailContainer.js';
 
 FlowRouter.route('/', {
@@ -20,6 +21,15 @@ FlowRouter.route('/about', {
     action() {
         mount(MainLayout, {
             content: (<About />)
+        })
+    }
+});
+
+FlowRouter.route('/gallery', {
+    name: 'gallery',
+    action() {
+        mount(MainLayout, {
+            content: (<Gallery />)
         })
     }
 });

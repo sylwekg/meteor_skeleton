@@ -15,6 +15,4 @@ export default class AccountUI extends Component {
     render() {
         return <span ref="container" />
     }
-
-
 }
