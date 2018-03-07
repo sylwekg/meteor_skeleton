@@ -3,7 +3,7 @@ import { FilesCollection } from 'meteor/ostrio:files';
 
 const Images = new FilesCollection({
   debug: true,
-  storagePath: '/assets/images',
+  // storagePath: '/assets/images',
   collectionName: 'Images',
   allowClientCode: true, // allow remove files from Client
   onBeforeUpload: function (file) {

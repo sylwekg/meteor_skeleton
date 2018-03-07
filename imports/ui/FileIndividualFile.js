@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Images from '../api/images';
-
+import { Collections } from '../lib/core.js';
 
 export default class IndividualFile extends Component {
   removeFile = () => {
     "use strict";
     let conf = confirm('Are you sure you want to delete the file?') || false;
     if (conf == true) {
-      Images.remove({_id: this.props.fileId}, function (error) {
+      Collections.userFiles.remove({_id: this.props.fileId}, function (error) {
         if (error) {
           Bert.alert(error,'danger', 'fixed-top', 'fa-frown-o');
           console.error("File wasn't removed, error: " + error)
