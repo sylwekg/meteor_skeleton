@@ -1,2 +1,18 @@
+# Dependency directory
 node_modules/
+
+# dotenv environment variables file
+.env
 settings.json
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Debug log from npm
+npm-debug.log
