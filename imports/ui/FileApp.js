@@ -161,6 +161,6 @@ export default withTracker(() => {
   const handle = Meteor.subscribe('files.images.all');
   return {
     docsReadyYet: handle.ready(),
-    docs: Images.find() // Collection is Images
+    docs: Images.find().fetch() // Collection is Images
   };
 })(FileApp);
