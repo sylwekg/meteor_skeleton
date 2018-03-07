@@ -118,23 +118,26 @@ class FileApp extends Component {
       });
 
       return <div>
-        <Grid container columns={2} stackable stretched>
-          <Grid.Column floated='left'>
-            <label htmlFor="fileinput" className="custom-file-upload">
-                Upload new file
-            </label>
-            <input type="file" id="fileinput" disabled={this.state.inProgress} ref="fileinput"
-                  onChange={this.uploadIt}/>
-          </Grid.Column>
-          <Grid.Column floated='left'>
-            <Progress percent={this.state.progress}  progress="percent" autoSuccess />
-          </Grid.Column>
-        </Grid>
+        <Segment raised>
+          <Grid container columns={2} stackable stretched verticalAlign="middle">
+            <Grid.Column floated='left'>
+              <label htmlFor="fileinput" className="custom-file-upload">
+                  Upload new file
+              </label>
+              <input type="file" id="fileinput" disabled={this.state.inProgress} ref="fileinput"
+                    onChange={this.uploadIt}/>
+            </Grid.Column>
+            <Grid.Column floated='left'>
+              <Progress style={{top: '0.7em'}} percent={this.state.progress}  progress="percent" autoSuccess />
+            </Grid.Column>
+          </Grid>
+        </Segment>
           {/* {this.showUploads()} */}
-        
-        <Item.Group divided>
-          {display}
-        </Item.Group>
+        <Segment raised>
+          <Item.Group divided>
+            {display}
+          </Item.Group>
+        </Segment>
       </div>
     }
     else return <div> loading ...</div>
