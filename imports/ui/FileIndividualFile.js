@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { Icon, Button, Item } from 'semantic-ui-react';
-import Images from '../api/images';
 
 export default class IndividualFile extends Component {
   render() {
@@ -20,14 +19,14 @@ export default class IndividualFile extends Component {
             A description which may flow for several lines and give context to the content.
           </Item.Description>
           <Item.Extra>
-              <Button primary floated='right' onClick={() => { this.props.onRemove(this.props.fileId) }}>
-                Delete
-                <Icon name='right chevron' />
-              </Button>
-              <Button primary floated='right' onClick={() => { this.props.onRename(this.props.fileId, this.props.fileName) }}>
-                Rename
-                <Icon name='right chevron' />
-              </Button>
+            <Button primary floated='right' onClick={() => { this.props.onRemove(this.props.fileId) }}>
+              Delete
+              <Icon name='right chevron' />
+            </Button>
+            <Button primary floated='right' onClick={() => { this.props.onRename(this.props.fileId, this.props.fileName) }}>
+              Rename
+              <Icon name='right chevron' />
+            </Button>
             </Item.Extra>
         </Item.Content>        
       </Item>

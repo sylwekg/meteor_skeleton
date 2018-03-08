@@ -9,13 +9,13 @@ import Images from '../api/images';
 
 class FileApp extends Component {
   constructor(props) {
-      super(props);
-      
-      this.state = {
-        uploading: [],
-        progress: 0,
-        inProgress: false,
-      };
+    super(props);
+    
+    this.state = {
+      uploading: [],
+      progress: 0,
+      inProgress: false,
+    };
   }
   onRemoveFile = ( fileId ) => {
     "use strict";
@@ -141,8 +141,8 @@ class FileApp extends Component {
         let link = Images.findOne({_id: aFile._id}).link();  //The "view/download" link
         // console.log('LINK:',link)
         // Send out components that show details of each file
-        return <div key={'file' + key}>
-        <IndividualFile
+        return <IndividualFile
+            key={'file' + key}
             onRemove = {this.onRemoveFile}
             onRename = {this.onRenameFile}
             fileName = {aFile.name}
@@ -150,7 +150,7 @@ class FileApp extends Component {
             fileId = {aFile._id}
             fileSize = {aFile.size}
           /> 
-        </div>
+        
       });
 
       return <div>
@@ -158,7 +158,7 @@ class FileApp extends Component {
           <Grid container columns={2} stackable stretched verticalAlign="middle">
             <Grid.Column floated='left'>
               <label htmlFor="fileinput" className="custom-file-upload">
-                  Upload new file
+                  Upload new file to local server
               </label>
               <input type="file" id="fileinput" disabled={this.state.inProgress} ref="fileinput"
                     onChange={this.uploadIt}/>

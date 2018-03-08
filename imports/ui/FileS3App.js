@@ -2,6 +2,7 @@ import { ReactMeteorData } from 'meteor/react-meteor-data';
 import { withTracker } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
+import { Item, Progress, Grid, Segment } from 'semantic-ui-react'
 import IndividualFile from './FileIndividualFile';
 import { _ } from 'meteor/underscore';
 import { Collections } from '../lib/core.js';
@@ -9,7 +10,7 @@ import { Collections } from '../lib/core.js';
 class FileS3App extends Component {
   constructor(props) {
       super(props);
-      
+        
       this.state = {
         uploading: [],
         progress: 0,
@@ -92,7 +93,7 @@ class FileS3App extends Component {
           console.log('uploaded: ', fileObj);
 
           // Remove the filename from the upload box
-          this.refs['fileinput'].value = '';
+          this.refs['s3fileinput'].value = '';
 
           // Reset our state for the next file
           this.setState({
@@ -155,39 +156,39 @@ class FileS3App extends Component {
         let link = Collections.userFiles.findOne({_id: aFile._id}).link();  //The "view/download" link
         // console.log('LINK:',link)
         // Send out components that show details of each file
-        return <div key={'file' + key}>
-        <IndividualFile
-            onRemove = {this.onRemoveFile}
-            onRename = {this.onRenameFile}
-            fileName = {aFile.name}
-            fileUrl = {link}
-            fileId = {aFile._id}
-            fileSize = {aFile.size}
-          />  
-        </div>
+        return <IndividualFile
+          key={'file' + key}
+          onRemove = {this.onRemoveFile}
+          onRename = {this.onRenameFile}
+          fileName = {aFile.name}
+          fileUrl = {link}
+          fileId = {aFile._id}
+          fileSize = {aFile.size}
+        />  
+        
       });
 
       return <div>
-        <div className="row">
-          <div className="col-md-12">
-            <p>Upload New File:</p>
-            <input type="file" id="fileinput" disabled={this.state.inProgress} ref="fileinput"
-                 onChange={this.uploadIt}/>
-          </div>
-        </div>
-
-        <div className="row m-t-sm m-b-sm">
-          <div className="col-md-6">
-
-            {this.showUploads()}
-
-          </div>
-          <div className="col-md-6">
-          </div>
-        </div>
-
-        {display}
-
+        <Segment raised>
+          <Grid container columns={2} stackable stretched verticalAlign="middle">
+            <Grid.Column floated='left'>
+              <label htmlFor="s3fileinput" className="custom-file-upload">
+                  Upload new file to AWS S3
+              </label>
+              <input type="file" id="s3fileinput" disabled={this.state.inProgress} ref="s3fileinput"
+                    onChange={this.uploadIt}/>
+            </Grid.Column>
+            <Grid.Column floated='left'>
+              <Progress style={{top: '0.7em'}} percent={this.state.progress}  progress="percent" autoSuccess />
+            </Grid.Column>
+          </Grid>
+        </Segment>
+          {/* {this.showUploads()} */}
+        <Segment raised>
+          <Item.Group divided>
+            {display}
+          </Item.Group>
+        </Segment>
       </div>
     }
     else return <div> loading ...</div>
