@@ -1,4 +1,19 @@
+# Dependency directory
 node_modules/
-settings.json
 build/
 
+# Environmental variables
+.env
+settings.json
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Debug log from npm
+npm-debug.log

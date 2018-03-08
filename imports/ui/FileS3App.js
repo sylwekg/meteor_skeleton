@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
-import { Meteor } from 'meteor/meteor';
 import { ReactMeteorData } from 'meteor/react-meteor-data';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Item, Progress, Grid, Segment } from 'semantic-ui-react'
-import { _ } from 'meteor/underscore';
+import React, { Component } from 'react';
+import { Meteor } from 'meteor/meteor';
 import IndividualFile from './FileIndividualFile';
-import Images from '../api/images';
+import { _ } from 'meteor/underscore';
+import { Collections } from '../lib/core.js';
 
-class FileApp extends Component {
+class FileS3App extends Component {
   constructor(props) {
       super(props);
       
@@ -17,17 +16,18 @@ class FileApp extends Component {
         inProgress: false,
       };
   }
+
   onRemoveFile = ( fileId ) => {
     "use strict";
     let conf = confirm('Are you sure you want to delete the file?') || false;
     if (conf == true) {
-      Images.remove({_id: fileId}, function (error) {
-        if (error) {
-          Bert.alert(error,'danger', 'fixed-top', 'fa-frown-o');
-          console.error("File wasn't removed, error: " + error)
-        } else {
-          console.info("File successfully removed");
+      Meteor.call('s3.storage.remove',fileId, (err, res) => {
+        if (typeof err !== 'undefined') {
+          Bert.alert(err,'danger', 'fixed-top', 'fa-frown-o');
+          console.error("Error: "+ err);          
         }
+        if (res)
+          console.log("RES: ",res)
       });
     }
   }
@@ -44,12 +44,15 @@ class FileApp extends Component {
     }
 
     if (!_.isEmpty(prompt)) {
-      Meteor.call('RenameFile', fileId, prompt, function (err, res) {
+      Meteor.call('s3.storage.rename', fileId, prompt, function (err, res) {
         if (err)
           console.log(err);
+        if (res)
+          console.log(res);
       });
     }
   }
+
   uploadIt = (e) => {
     "use strict";
     e.preventDefault();
@@ -60,7 +63,7 @@ class FileApp extends Component {
       var file = e.currentTarget.files[0];
 
       if (file) {
-        let uploadInstance = Images.insert({
+        let uploadInstance = Collections.userFiles.insert({
           file: file,
           meta: {
             locator: this.props.fileLocator,
@@ -125,6 +128,16 @@ class FileApp extends Component {
     if (!_.isEmpty(this.state.uploading)) {
       return <div>
         {this.state.uploading.file.name}
+
+        <div className="progress progress-bar-default">
+          <div style={{width: this.state.progress + '%'}} aria-valuemax="100"
+             aria-valuemin="0"
+             aria-valuenow={this.state.progress || 0} role="progressbar"
+             className="progress-bar">
+            <span className="sr-only">{this.state.progress}% Complete (success)</span>
+            <span>{this.state.progress}%</span>
+          </div>
+        </div>
       </div>
     }
   }
@@ -134,11 +147,12 @@ class FileApp extends Component {
       'use strict';
 
       let fileCursors = this.props.docs;
+
       // Run through each file that the user has stored
       // (make sure the subscription only sends files owned by this user)
       let display = fileCursors.map((aFile, key) => {
         // console.log("a file: ",aFile);
-        let link = Images.findOne({_id: aFile._id}).link();  //The "view/download" link
+        let link = Collections.userFiles.findOne({_id: aFile._id}).link();  //The "view/download" link
         // console.log('LINK:',link)
         // Send out components that show details of each file
         return <div key={'file' + key}>
@@ -149,31 +163,31 @@ class FileApp extends Component {
             fileUrl = {link}
             fileId = {aFile._id}
             fileSize = {aFile.size}
-          /> 
+          />  
         </div>
       });
 
       return <div>
-        <Segment raised>
-          <Grid container columns={2} stackable stretched verticalAlign="middle">
-            <Grid.Column floated='left'>
-              <label htmlFor="fileinput" className="custom-file-upload">
-                  Upload new file
-              </label>
-              <input type="file" id="fileinput" disabled={this.state.inProgress} ref="fileinput"
-                    onChange={this.uploadIt}/>
-            </Grid.Column>
-            <Grid.Column floated='left'>
-              <Progress style={{top: '0.7em'}} percent={this.state.progress}  progress="percent" autoSuccess />
-            </Grid.Column>
-          </Grid>
-        </Segment>
-          {/* {this.showUploads()} */}
-        <Segment raised>
-          <Item.Group divided>
-            {display}
-          </Item.Group>
-        </Segment>
+        <div className="row">
+          <div className="col-md-12">
+            <p>Upload New File:</p>
+            <input type="file" id="fileinput" disabled={this.state.inProgress} ref="fileinput"
+                 onChange={this.uploadIt}/>
+          </div>
+        </div>
+
+        <div className="row m-t-sm m-b-sm">
+          <div className="col-md-6">
+
+            {this.showUploads()}
+
+          </div>
+          <div className="col-md-6">
+          </div>
+        </div>
+
+        {display}
+
       </div>
     }
     else return <div> loading ...</div>
@@ -181,9 +195,9 @@ class FileApp extends Component {
 }
 
 export default withTracker(() => {
-  const handle = Meteor.subscribe('files.images.all');
+  const handle = Meteor.subscribe('filesS3.images.all');
   return {
     docsReadyYet: handle.ready(),
-    docs: Images.find().fetch() // Collection is Images
+    docs: Collections.userFiles.find().fetch() // Collection is Collections.userFiles
   };
-})(FileApp);
+})(FileS3App);
