@@ -153,8 +153,8 @@ class FileApp extends Component {
         // Send out components that show details of each file
         return <div key={'file' + key}>
         <IndividualFile
-            onRemove = {this.props.onRemove}
-            onRename = {this.props.onRename}
+            onRemove = {this.onRemoveFile}
+            onRename = {this.onRenameFile}
             fileName = {aFile.name}
             fileUrl = {link}
             fileId = {aFile._id}

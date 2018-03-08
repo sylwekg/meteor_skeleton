@@ -41,7 +41,7 @@ if (s3Conf && s3Conf.key && s3Conf.secret && s3Conf.bucket && s3Conf.region) {
     // storagePath: 'assets/app/uploads/uploadedFiles',
     collectionName: 'userFiles',
     // Disallow Client to execute remove, use the Meteor.method
-    allowClientCode: true,
+    allowClientCode: false,
 
     // Start moving files to AWS:S3
     // after fully received by the Meteor server
@@ -190,3 +190,31 @@ Meteor.publish('filesS3.images.all', function () {
   return Collections.userFiles.find().cursor;
 });
 
+Meteor.methods({
+  's3.storage.remove'(fileId) {
+    coursor = Collections.userFiles.findOne({_id: fileId});
+    // console.log("FILE FOR REMOVAL ", coursor._fileRef.userId );
+    if(Meteor.userId() !== coursor._fileRef.userId)
+        throw new Meteor.Error('You are not authorized to delete the file');
+
+    Collections.userFiles.remove({_id: fileId}, function (error) {
+      if (error) {
+        console.log("Error during file removal: " + error);
+        throw new Meteor.Error(error);
+      } 
+      console.log("File successfully removed");
+      return "File successfully removed"
+    });
+    console.log("Remove function exec")
+  },
+  's3.storage.rename'(fileId, fileName) {
+    coursor = Collections.userFiles.findOne({_id: fileId});
+    // console.log("FILE FOR REMOVAL ", coursor._fileRef.userId );
+    if(Meteor.userId() !== coursor._fileRef.userId)
+        throw new Meteor.Error('You are not authorized to delete the file');
+
+    // to be implemented ....
+
+    return "function not implemented"
+  }
+})

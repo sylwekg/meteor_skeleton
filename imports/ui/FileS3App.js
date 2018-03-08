@@ -21,13 +21,13 @@ class FileS3App extends Component {
     "use strict";
     let conf = confirm('Are you sure you want to delete the file?') || false;
     if (conf == true) {
-      Collections.userFiles.remove({_id: fileId}, function (error) {
-        if (error) {
-          Bert.alert(error,'danger', 'fixed-top', 'fa-frown-o');
-          console.error("File wasn't removed, error: " + error)
-        } else {
-          console.info("File successfully removed");
+      Meteor.call('s3.storage.remove',fileId, (err, res) => {
+        if (typeof err !== 'undefined') {
+          Bert.alert(err,'danger', 'fixed-top', 'fa-frown-o');
+          console.error("Error: "+ err);          
         }
+        if (res)
+          console.log("RES: ",res)
       });
     }
   }
@@ -44,9 +44,11 @@ class FileS3App extends Component {
     }
 
     if (!_.isEmpty(prompt)) {
-      Meteor.call('RenameFile', fileId, prompt, function (err, res) {
+      Meteor.call('s3.storage.rename', fileId, prompt, function (err, res) {
         if (err)
           console.log(err);
+        if (res)
+          console.log(res);
       });
     }
   }
@@ -155,8 +157,8 @@ class FileS3App extends Component {
         // Send out components that show details of each file
         return <div key={'file' + key}>
         <IndividualFile
-            onRemove = {this.props.onRemove}
-            onRename = {this.props.onRename}
+            onRemove = {this.onRemoveFile}
+            onRename = {this.onRenameFile}
             fileName = {aFile.name}
             fileUrl = {link}
             fileId = {aFile._id}

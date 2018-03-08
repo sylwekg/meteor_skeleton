@@ -14,7 +14,7 @@ export default class IndividualFile extends Component {
       </div>
       <div className="row">
         <div className="col-md-3">
-          <button onClick={ () => { this.props.onRename(this.props.fileId, this.props.fileName) } } className="btn btn-outline btn-primary btn-sm">
+          <button onClick={ () => { this.props.onRename(this.props.fileId, this.props.fileName) }} className="btn btn-outline btn-primary btn-sm">
             Rename
           </button>
         </div>
