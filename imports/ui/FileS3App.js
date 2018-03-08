@@ -1,6 +1,5 @@
 import { ReactMeteorData } from 'meteor/react-meteor-data';
 import { withTracker } from 'meteor/react-meteor-data';
-
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import IndividualFile from './FileIndividualFile';
@@ -16,6 +15,40 @@ class FileS3App extends Component {
         progress: 0,
         inProgress: false,
       };
+  }
+
+  onRemoveFile = ( fileId ) => {
+    "use strict";
+    let conf = confirm('Are you sure you want to delete the file?') || false;
+    if (conf == true) {
+      Collections.userFiles.remove({_id: fileId}, function (error) {
+        if (error) {
+          Bert.alert(error,'danger', 'fixed-top', 'fa-frown-o');
+          console.error("File wasn't removed, error: " + error)
+        } else {
+          console.info("File successfully removed");
+        }
+      });
+    }
+  }
+
+  onRenameFile = (fileId, fileName) => {
+    "use strict";
+    let validName = /[^a-zA-Z0-9 \.:\+()\-_%!&]/gi;
+    let prompt    = window.prompt('New file name?', fileName);
+
+    // Replace any non valid characters, also do this on the server
+    if (prompt) {
+      prompt = prompt.replace(validName, '-');
+      prompt.trim();
+    }
+
+    if (!_.isEmpty(prompt)) {
+      Meteor.call('RenameFile', fileId, prompt, function (err, res) {
+        if (err)
+          console.log(err);
+      });
+    }
   }
 
   uploadIt = (e) => {
@@ -122,10 +155,12 @@ class FileS3App extends Component {
         // Send out components that show details of each file
         return <div key={'file' + key}>
         <IndividualFile
-            fileName={aFile.name}
-            fileUrl={link}
-            fileId={aFile._id}
-            fileSize={aFile.size}
+            onRemove = {this.props.onRemove}
+            onRename = {this.props.onRename}
+            fileName = {aFile.name}
+            fileUrl = {link}
+            fileId = {aFile._id}
+            fileSize = {aFile.size}
           />  
         </div>
       });

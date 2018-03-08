@@ -6,9 +6,12 @@ export default class Gallery extends Component {
     return (
       <div>
         <br />
+        <h3> Local server file storage </h3>
         <br />
         <FileApp /> 
         <br />  
+        <h3> AWS S3 file storage </h3>
+        <br />
         <FileS3App />
       </div>
     );
